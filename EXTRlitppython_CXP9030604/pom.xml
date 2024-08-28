@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ericsson.nms.litp.3pps</groupId>
+    <artifactId>EXTRlitppython_CXP9030604</artifactId>
+    <packaging>rpm</packaging>
+    <name>[${project.parent.artifactId}] ${project.artifactId} RPM module</name>
+    <description>LITP Python 3PPs</description>
+    <parent>
+        <groupId>com.ericsson.nms.litp.3pps</groupId>
+        <artifactId>EXTRlitppython</artifactId>
+        <version>2.5.2-SNAPSHOT</version>
+    </parent>
+  <properties>
+    <!-- publishes the rpm module to the ci portal -->
+    <publish_artifact>true</publish_artifact>
+    <packaging.type>rpm</packaging.type>
+  </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rpm-maven-plugin</artifactId>
+                <version>2.1-alpha-1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <needarch>x86_64</needarch>
+                    <requires>
+                        <require>python &gt;= 2.7</require>
+                        <require>python(abi) = 2.7</require>
+                        <require>rpmlib(CompressedFileNames) &lt;= 3.0.4-1</require>
+                        <require>rpmlib(PayloadFilesHavePrefix) &lt;= 4.0-1</require>
+                        <require>rpmlib(FileDigests) &lt;= 4.6.0-1</require>
+                        <require>rpmlib(PayloadIsXz) &lt;= 5.2-1</require>
+                        <require>rpmlib(PartialHardlinkSets) &lt;= 4.0.4-1</require>
+                        <require>libc.so.6()(64bit)</require>
+                        <require>libc.so.6(GLIBC_2.2.5)(64bit)</require>
+                        <require>libpthread.so.0()(64bit)</require>
+                        <require>libpython2.7.so.1.0()(64bit)</require>
+                        <require>rtld(GNU_HASH)</require>
+                        <require>rpmlib(PayloadIsXz) &lt;= 5.2-1</require>
+                        <require>python-argparse</require>
+                        <require>pyparsing</require>
+                    </requires>
+
+                    <provides>
+                        <provide>python-jsonpickle = 0.3.1</provide>
+                        <provide>_yaml.so()(64bit)</provide>
+                        <provide>python-graph-core = 1.8.2</provide>
+                        <provide>pydot = 1.0.28</provide>
+                        <provide>CherryPy = 3.2.2</provide>
+                        <provide>jsonpath = 0.54</provide>
+                        <provide>python-pampy = 0.1.4</provide>
+                        <provide>python-pampy(x86-64) = 0.1.4</provide>
+                        <provide>pyOpenSSL = 17.2.0</provide>
+                    </provides>
+                    <mappings>
+                        <mapping>
+                            <directory>${app.home}/3pps/lib/python/</directory>
+                            <configuration>false</configuration>
+                            <sources>
+                                <source>
+                                    <location>${project.parent.build.directory}/rpm-input/lib</location>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </source>
+                            </sources>
+                        </mapping>
+                        <mapping>
+                            <directory>${app.home}/3pps/licenses</directory>
+                            <configuration>false</configuration>
+                            <sources>
+                                <source>
+                                    <location>${project.parent.build.directory}/rpm-input/license</location>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </source>
+                            </sources>
+                        </mapping>
+                    </mappings>
+                    <postinstallScriptlet>
+                        <scriptFile>${project.parent.basedir}/scripts/postinstall.sh</scriptFile>
+                        <fileEncoding>utf-8</fileEncoding>
+                    </postinstallScriptlet>
+                    <postremoveScriptlet>
+                        <scriptFile>${project.parent.basedir}/scripts/postremove.sh</scriptFile>
+                        <fileEncoding>utf-8</fileEncoding>
+                    </postremoveScriptlet>   
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

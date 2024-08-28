@@ -1,0 +1,14 @@
+--- old/src/CherryPy-3.2.2/cherrypy/wsgiserver/wsgiserver2.py	2011-10-19 05:12:29.000000000 +0100
++++ new/src/CherryPy-3.2.2/cherrypy/wsgiserver/wsgiserver2.py	2016-01-27 13:34:29.000000000 +0000
+@@ -1900,9 +1900,8 @@ class HTTPServer(object):
+             if self.ssl_adapter is not None:
+                 try:
+                     s, ssl_env = self.ssl_adapter.wrap(s)
+-                except NoSSLError:
+-                    msg = ("The client sent a plain HTTP request, but "
+-                           "this server only speaks HTTPS on this port.")
++                except:
++                    msg = ("Unable to establish HTTPS connection.")
+                     buf = ["%s 400 Bad Request\r\n" % self.protocol,
+                            "Content-Length: %s\r\n" % len(msg),
+                            "Content-Type: text/plain\r\n\r\n",

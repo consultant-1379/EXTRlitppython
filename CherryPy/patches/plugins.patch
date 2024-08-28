@@ -1,0 +1,13 @@
+diff -rupN old/src/CherryPy-3.2.2/cherrypy/process/plugins.py new/src/CherryPy-3.2.2/cherrypy/process/plugins.py
+--- old/src/CherryPy-3.2.2/cherrypy/process/plugins.py	2011-10-14 01:37:54.000000000 +0100
++++ new/src/CherryPy-3.2.2/cherrypy/process/plugins.py	2016-05-04 11:14:35.296751097 +0100
+@@ -375,7 +375,8 @@ class Daemonizer(SimplePlugin):
+                      % (sys.argv[0], exc.errno, exc.strerror))
+         
+         os.chdir("/")
+-        os.umask(0)
++        # Set the umask to prevent default permissions of world-writable files
++        os.umask(0022)
+         
+         si = open(self.stdin, "r")
+         so = open(self.stdout, "a+")

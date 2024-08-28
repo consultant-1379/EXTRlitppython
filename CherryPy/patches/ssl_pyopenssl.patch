@@ -1,0 +1,32 @@
+--- CherryPy/target/src/CherryPy-3.2.2/cherrypy/wsgiserver/ssl_pyopenssl.py	2011-10-14 01:37:54.000000000 +0100
++++ CherryPy/target/src/CherryPy-3.2.2/cherrypy/wsgiserver/ssl_pyopenssl.py	2024-03-05 17:04:38.552079000 +0000
+@@ -194,6 +194,29 @@ class pyOpenSSLAdapter(wsgiserver.SSLAda
+         """Return an SSL.Context from self attributes."""
+         # See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/442473
+         c = SSL.Context(SSL.SSLv23_METHOD)
++        c.set_options(
++             SSL.OP_NO_TLSv1
++            | SSL.OP_NO_TLSv1_1
++            | SSL.OP_NO_SSLv2
++            | SSL.OP_NO_SSLv3
++            | SSL.VERIFY_PEER
++            | SSL.OP_NO_TICKET
++            | SSL.OP_CIPHER_SERVER_PREFERENCE
++            | SSL.OP_EPHEMERAL_RSA
++        )
++        c.set_session_cache_mode(
++            SSL.SESS_CACHE_OFF
++        )
++        c.set_cipher_list(
++            'ECDHE-ECDSA-AES256-GCM-SHA384'
++            ':ECDHE-ECDSA-AES128-GCM-SHA256'
++            ':ECDHE-RSA-AES256-GCM-SHA384'
++            ':ECDHE-RSA-AES128-GCM-SHA256'
++            ':DHE-RSA-AES256-GCM-SHA384'
++            ':DHE-RSA-AES128-GCM-SHA256'
++            ':ECDH-ECDSA-AES256-GCM-SHA384'
++            ':ECDH-ECDSA-AES128-GCM-SHA256'
++        )
+         c.use_privatekey_file(self.private_key)
+         if self.certificate_chain:
+             c.load_verify_locations(self.certificate_chain)

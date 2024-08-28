@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ericsson.litp</groupId>
+        <artifactId>integration</artifactId>
+        <version>2.47.1</version>
+    </parent>
+
+    <groupId>com.ericsson.nms.litp.3pps</groupId>
+    <artifactId>EXTRlitppython</artifactId>
+    <version>2.5.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <modules>
+        <module>CherryPy</module>
+        <module>jsonpickle</module>
+        <module>python-graph-core</module>
+        <module>pydot</module>
+        <module>jsonpath</module>
+        <module>pampy</module>
+        <module>pyOpenSSL</module>
+        <module>EXTRlitppython_CXP9030604</module>
+    </modules>
+
+    <scm>
+        <developerConnection>${ericsson.scm.url}</developerConnection>
+        <tag>EXTRlitppython-1.0.1</tag>
+    </scm>
+</project>
